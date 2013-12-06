@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 25px 50px;
+}
+
+#chat {
+    display: none;
+}
+
+#messages, #results {
+    list-style-type: none;
+    margin: 25px 0;
+}
+
+li {
+    line-height: 18px;
+    color: #333;
+}
+
+li.message:not(.confirmed) {
+    background-color: #cdcdcd;
+    transition: color .7s, background-color .7s;
+}
+
+.confirmed {
+    color: #000;
+    background-color: #fff;
+}
+
+#results a { display: none; margin-left: 5px; }
+form.isDJ #results a { display: inline; }
+
+#s, #input {
+    width: 350px;
+    height: 33px;
+    padding: 0 7px;
+}
