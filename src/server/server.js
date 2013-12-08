@@ -10,15 +10,23 @@ var express = require("express"),
     app,
     io,
     currentSong,
-    dj;
+    dj,
+    client  = __dirname + "/../client";
 
 /**
  * Create app
  */
 app = express();
 
-app.use(express.static(__dirname + "../client"));
-app.use(express.bodyParser({ keepExtensions: true, uploadDir: '/' }));
+app.get("/", function (req, res) {
+    console.log("user " + req.query.user_id + " join from " + req.query.referrer);
+    res.cookie("userId", req.query.user_id, { maxAge: 900000 });
+    res.redirect(301, "/index.html?uid=" + req.query.user_id);
+    //res.send("<script>document.location.href = '/index.html?userId=" + req.query.user_id + "';</script>");
+});
+
+app.use(express.static(client));
+app.use(express.bodyParser({ keepExtensions: true, uploadDir: "/" }));
 
 server = http.createServer(app);
 
@@ -38,7 +46,6 @@ function elect(socket) {
 }
 
 io.sockets.on("connection", function (socket) {
-    console.log("----", socket);
     socket.on("join", function (name) {
         socket.nickname = name;
         socket.broadcast.emit("announcement", name + " joined the chat.");

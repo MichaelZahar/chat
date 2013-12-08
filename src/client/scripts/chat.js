@@ -1,5 +1,8 @@
 window.onload = function () {
     var socket = io.connect();
+
+    console.log("referrer", document.referrer);
+    console.log("cookie", document.cookie);
     
     socket.on("connect", function () {
         socket.emit("join", prompt("What's your nickname?"));
